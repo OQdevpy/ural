@@ -1,0 +1,23 @@
+{% load sidebar %}
+{% sidebar as sidebar_ %}
+{% for cat in sidebar_.categories %}
+
+<div class="sidebar-menu-wrap">
+  <a href="{{cat.get_absolute_url}}"  onclick = "catalog_url(this)" class="sidebar-title">{{cat.title}}</a>
+  <ul class="sidebar-menu">
+    {% for ccat in cat.child_nodes %}
+      <li class="sidebar-menu__item"><a href="{{ccat.get_absolute_url}}" onclick="catalog_url(this)" class="sidebar-menu__link">{{ccat.title}}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<script>
+  function catalog_url(url){
+    var country = localStorage.getItem('coutry');
+    var href = url.getAttribute('href');
+    var newHref ='/' +  country  + href;
+    url.setAttribute('href', newHref);
+    // alert(newHref);
+
+  }
+</script>
+{% endfor %}

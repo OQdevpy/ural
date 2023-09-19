@@ -1,0 +1,71 @@
+{% extends 'core/base.html' %}
+
+{% block head_meta %}
+  <title>Карта сайта</title>
+{% endblock head_meta %}
+
+{% block content %}
+  <div class="category-menu-toggle hidden-md hidden-lg">
+    <div class="category-menu-toggle__btn">
+      <span class="category-menu-toggle__icon">
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+      </span>
+      <span class="category-menu-toggle__txt category-menu-toggle__txt-closed">Открыть каталог</span> 
+      <span class="category-menu-toggle__txt category-menu-toggle__txt-open">Скрыть каталог</span>  
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-lg-3 sidebar">
+          {% include "catalog/sidebar.html" %}
+        </div>
+        <div class="col-md-8 col-lg-9">
+          <h1 class="page-title">Карта сайта</h1>
+          <div class="b-text">
+            
+            <ul>
+                <li>
+                    <a onclick="url__(this)" href="/">Главная</a>
+                </li>
+
+                {% for p in pages %}
+                  <li>
+                    <a onclick="url__(this)" href="/{{p.alias}}/">{{ p.title }}</a>
+                  </li>
+                {% endfor %}
+
+                <li>
+                  <a onclick="url__(this)" href="/catalog/">Каталог</a>
+                  <ul>
+                    {% for c in categories %}
+                      <li>
+                        <a onclick="url__(this)" href="/catalog/{{ c.alias }}/">{{ c.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+                <script>
+                  function url__(element) {
+                    console.log('url');
+                    var baseURL = 'http://localhost:8000/';
+                    var coutry = localStorage.getItem('coutry');
+                    var href = element.getAttribute('href');
+                    var newURL = baseURL + coutry + '/' + href;
+                    element.setAttribute('href', newURL);
+    
+                    
+                    
+                  }
+                  </script>
+            </ul> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+{% endblock content %}

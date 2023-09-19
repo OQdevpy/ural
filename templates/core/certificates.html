@@ -1,0 +1,69 @@
+{% extends 'core/base.html' %}
+
+{% block head_meta %}
+  <title>{% if page.meta_title %}{{page.meta_title}}{% else %}{{page.title}} | Австостан{% endif %}</title>
+  <meta name="Keywords" content="{{page.meta_keywords}}">
+  <meta name="Description" content="{{page.meta_description}}">
+{% endblock head_meta %}
+
+{% block content %}
+  <div class="breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs__list" itemscope itemtype="http://schema.org/BreadcrumbList">
+        {% for b in breadcrumbs %}
+          <li class="breadcrumbs__list-i" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="{{b.url}}" class="breadcrumbs__link"><span itemprop="name">{{b.title}}</span></a>
+            <meta itemprop="position" content="{{b.position}}" />
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="category-menu-toggle hidden-md hidden-lg">
+    <div class="category-menu-toggle__btn">
+      <span class="category-menu-toggle__icon">
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+      </span>
+      <span class="category-menu-toggle__txt category-menu-toggle__txt-closed">Открыть каталог</span>
+      <span class="category-menu-toggle__txt category-menu-toggle__txt-open">Скрыть каталог</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-lg-3 sidebar">
+          {% include "catalog/sidebar.html" %}
+        </div>
+        <div class="col-md-8 col-lg-9">
+          <h1 class="page-title">Сертификаты</h1>
+          {% for s in certs %}
+            <div class="certs-sider-title">{{ s.title }}</div>
+            <div class="cert-list"><!--
+              {% for c in s.items.all %}
+                --><div class="cert-list__item" data-gallery-open="#modal-gallery-item-{{ c.id }}">
+                  {% if c.image %}<img src="{{c.image.url}}" alt=".." class="cert-list__img">{% endif %}
+                </div><!--
+              {% endfor %}
+            --></div>
+
+            <div class="certs-slider-descr">
+              {{ s.description|safe }}
+            </div>
+
+              {% for c in s.items.all %}
+                {% if c.image %}
+                  <div class="gallery-popup" id="modal-gallery-item-{{ c.id }}"
+                       data-image="{{ c.image.url }}"></div>
+                {% endif %}
+              {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

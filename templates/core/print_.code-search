@@ -1,0 +1,18 @@
+# Query: print(
+# Excluding: .js
+# ContextLines: 1
+
+5 results - 2 files
+
+avtostan/views.py:
+  45          context = super().get_context_data(**kwargs)
+  47          try:
+  48              context['page'] = Page.objects.get(id=9)
+  50          except Page.DoesNotExist:
+
+catalog/templatetags/minicart.py:
+  19              order = Order.objects.get(pk=session['order_id'])
+  22              for i in order.items.all():
+
+  24                  order_cost = order_cost + i.quantity * i.offer.price
+  26      return {'order_cost': order_cost, 'order_quantity': order_quantity}

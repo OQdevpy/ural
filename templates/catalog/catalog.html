@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+
+
+{% block head_meta %}
+  <title>{% if page.meta_title %}{{page.meta_title}}{% else %}{{page.title}}{% endif %}</title>
+  <meta name="Keywords" content="{{page.meta_keywords}}">
+  <meta name="Description" content="{{page.meta_description}}">
+{% endblock head_meta %}
+
+{% block content %}
+  <div class="breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs__list" itemscope itemtype="http://schema.org/BreadcrumbList">
+        {% for b in breadcrumbs %}
+          <li class="breadcrumbs__list-i" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="{{b.url}}" class="breadcrumbs__link"><span itemprop="name">{{b.title}}</span></a>
+            <meta itemprop="position" content="{{b.position}}" />
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-lg-3 sidebar">
+          {% include "catalog/sidebar.html" %}
+        </div>
+        <div class="col-md-8 col-lg-9  main-content-block">
+          <h1 class="page-title">Каталог</h1>
+
+          <div class="categories-grid">
+            {% for c in categories %}
+             <a class="categories-grid-item" href="{{c.get_absolute_url}}" onclick="get_urls(this)">
+                {% if c.image %}
+                  <img src="{{c.image.url}}" alt=".." class="categories-grid-item__img">
+                {% else %}
+                   <img src="//placehold.it/300x300" alt="..." class="categories-grid-item__img">
+                {% endif %}
+
+                <span class="categories-grid-item__title">{{c.title}}</span>
+              </a>
+            {% endfor %}
+          </div>
+          <script>
+            function get_urls(el){
+              var url = el.getAttribute('href');
+              var href = localStorage.getItem('coutry');
+              el.setAttribute('href', '/' + href + url);
+            }
+            
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

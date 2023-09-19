@@ -1,0 +1,257 @@
+{% load static %}
+{% load minicart %}
+{% load sidebar %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{% static 'nbshop/favicon.png' %}" rel="shortcut icon" type="image/x-icon" />
+
+  {% block head_meta %}
+  <title>...</title>
+  <meta name="Keywords" content="...">
+  <meta name="Description" content="...">
+  {% endblock head_meta %}
+
+  <link href="https://fonts.googleapis.com/css?family=Exo+2:300,400,400i,700&amp;subset=cyrillic" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'frontend/iziToast/dist/css/iziToast.min.css' %}">
+  <link rel="stylesheet" href="{% static 'frontend/iziModal/css/iziModal.min.css' %}">
+  <link rel="stylesheet" href="{% static 'frontend/css/grid12.css' %}">
+  <link rel="stylesheet" href="{% static 'frontend/Swiper/css/swiper.min.css' %}">
+  <link rel="stylesheet" href="{% static 'frontend/css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'frontend/css/main.css' %}">
+
+  <meta name="yandex-verification" content="3a8fab2b194aab74" />
+  <meta name="google-site-verification" content="YxtencIDEr031nb4Lw0iU5RePntVnoqQk75rkxxxwzQ" />
+  <meta name="google-site-verification" content="PKM4KFY32Vqxe-Yf3KvASbuvAv6R7vsX5_hGUO4NTjA" />
+</head>
+
+<body>
+  <div style="display:none;">
+    <svg>
+      <symbol id="svg-icon-down" viewBox="0 0 16 9">
+        <path fill-rule="evenodd"
+          d="M8 9c-.303 0-.58-.106-.8-.318L.307 1.802A1.048 1.048 0 0 1 .334.295a1.158 1.158 0 0 1 1.572.027L8 6.407 14.094.32c.413-.423 1.13-.423 1.572-.027.44.397.44 1.085.027 1.509L8.8 8.683C8.58 8.893 8.303 9 8 9z">
+        </path>
+      </symbol>
+      <symbol id="svg-icon-prev" viewBox="0 0 24 41">
+        <path fill-rule="evenodd"
+          d="M.017 20.511c0-.776.282-1.481.846-2.046L19.21.825a2.876 2.876 0 0 1 4.023.07 2.876 2.876 0 0 1-.071 4.022L6.931 20.511l16.23 15.594c1.129 1.059 1.129 2.894.07 4.023-1.058 1.128-2.893 1.128-4.022.07L.863 22.558a2.826 2.826 0 0 1-.846-2.047z">
+        </path>
+      </symbol>
+      <symbol id="svg-icon-next" viewBox="0 0 24 41">
+        <path fill-rule="evenodd"
+          d="M23.983 20.489c0 .776-.282 1.481-.846 2.046L4.79 40.175a2.876 2.876 0 0 1-4.023-.07 2.876 2.876 0 0 1 .071-4.022l16.23-15.594L.838 4.895C-.29 3.836-.29 2 .769.872 1.826-.256 3.661-.256 4.79.802l18.346 17.64c.564.565.846 1.27.846 2.047z">
+        </path>
+      </symbol>
+    </svg>
+  </div>
+
+  {% block before_wrapper %}
+  {% endblock before_wrapper %}
+
+  <div class="wrapper">
+    <header class="header">
+      <div class="header__top">
+        <div class="container">
+          <div class="header__top-inner">
+            <a class="main-logo" href="/">
+
+              <!-- Logo section -->
+              <span class="main-logo__text">
+                <span class="main-logo__top-text main-logo__top-text@desktop">УралЭнергоКомплект</span>
+                <span class="main-logo__top-text main-logo__top-text@mobile">Урал<br />Энерго<br />Комплект</span>
+              </span>
+            </a>
+
+            <!-- Main navigation menu -->
+            <ul class="main-menu">
+              
+              <li class="main-menu__item">
+                <a href="about/" onclick="url(this)" class="main-menu__link">О компании</a>
+              </li>
+              <li class="main-menu__item">
+                <a href="catalog/" onclick="url(this)" class="main-menu__link">Каталог</a>
+                <!-- Submenu under "Каталог" -->
+                <ul class="main-menu__submenu">
+                  <li class="main-menu__item">
+                    <a href="catalog/derevyannye-opory-lep/" onclick="url(this)" class="main-menu__link">Деревянные опоры ЛЭП</a>
+                  </li>
+                  <li class="main-menu__item">
+                    <a href="catalog/zhbi/" onclick="url(this)" class="main-menu__link">ЖБИ</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="main-menu__item">
+                <a href="proizvodstvo/" onclick="url(this)" class="main-menu__link">Производство</a>
+              </li>
+              <li class="main-menu__item">
+                <a href="certs/" onclick="url(this)" class="main-menu__link">Сертификаты</a>
+              </li>
+              <li class="main-menu__item">
+                <a href="contacts/" onclick="url(this)" class="main-menu__link">Контакты</a>
+              </li>
+              <script>
+              function url(element) {
+                console.log('url');
+                var baseURL = 'https://uekopora.ru/';
+                var coutry = localStorage.getItem('coutry');
+                var href = element.getAttribute('href');
+                var newURL = baseURL + coutry + '/' + href;
+                element.setAttribute('href', newURL);
+
+                
+                
+              }
+              </script>
+              
+            </ul>
+
+           
+
+            <!-- Header contacts -->
+            <div class="header-contacts">
+              <div class="header-contacts__phone"><a data-ym-goal="header_click_phone" href="tel:+73432723069">+7 (343)
+                  272-30-69</a></div>
+              <a class="header-contacts__feedback modal-open" href="#">Заказать звонок</a>
+              <div class="header-contacts__email">uek2010@mail.ru</div>
+            </div>
+
+            <!-- Mobile menu toggle button -->
+            <button class="mobile-menu-toggle js-menu-toggle hidden-md hidden-lg">
+              <span class="mobile-menu-toggle__i"></span>
+              <span class="mobile-menu-toggle__i"></span>
+              <span class="mobile-menu-toggle__i"></span>
+              <span class="mobile-menu-toggle__i"></span>
+            </button>
+
+            <!-- Custom content -->
+            <div style="margin-left: 50px;">
+              <select id="citySelect" onchange="changeCity()">
+                <option value="ekaterinburg">Екатеринбург</option>
+                <option value="ufa">Уфа</option>
+                <option value="sant-peterburg">Санкт-Петербург</option>
+                <option value="tyumen">Тюмень</option>
+                <option value="kursk">Курская область</option>
+                <option value="magadan">Магадан</option>
+                <option value="mahachkala">Махачкала</option>
+            </select>
+            </div>
+          
+          <script>
+          window.onload = function() {
+              var urlParams = new URLSearchParams(window.location.search);
+              var selectedCity = localStorage.getItem('coutry');
+              
+              if (selectedCity) {
+                  var citySelect = document.getElementById("citySelect");
+                  citySelect.value = selectedCity;
+              }
+          }
+          
+          function changeCity() {
+            var citySelect = document.getElementById("citySelect");
+            var selectedCity = citySelect.value;
+            localStorage.setItem('coutry', selectedCity);
+              
+              if (selectedCity !== "") {
+                  var baseURL = 'https://uekopora.ru/'
+                  var currentURL = window.location.href;
+                  // var baseURL = currentURL.split('?')[0];
+                  var newURL = baseURL + selectedCity + "/";
+                  window.location.href = newURL;
+              }
+          }
+          </script>
+          
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+  
+
+
+  <div class="content-block">
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-2 col-md-4 col-md-3 footer-col">
+          <a class="main-logo" href="/">
+            <span class="main-logo__text">
+              <span class="main-logo__top-text">УралЭнергоКомплект</span>
+            </span>
+
+            <!-- -->
+            <!-- <img src="//placehold.it/180x80" alt="..." class="main-logo__img"> -->
+            <!-- <span class="main-logo__text hidden-sm hidden-xs">
+                  <span class="main-logo__top-text">ООО «АВТОСТАН»<br>официальный дистрибьютор</span>
+                  <span class="main-logo__bottom-text">ТЭСК</span>
+                </span> -->
+          </a>
+        </div>
+        <div class="col-sm-10 col-md-8 col-lg-9 footer-col">
+          620050 Свердловская обл., г. Екатеринбург, ул. Монтажников, 26А, офис 109<br>
+          Телефон: <a href="tel:+73432723069">+7 (343) 272-30-69</a>, <a href="tel:+79221178403">+7 (922)
+            117-84-03</a><br>
+          Email: <a href="mailto:uek2010@mail.ru">uek2010@mail.ru</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  </div>
+  {% include "catalog/minicart.html" %}
+
+  <div id="callback">
+    <!-- <div class="iziModal-header" style="background: rgb(136, 160, 185); padding-right: 78px;">
+        <i class="iziModal-header-icon icon-home"></i>
+        <p class="iziModal-header-title">Заказать звонок</p>
+        <p class="iziModal-header-subtitle">Оставьте ваш номер и специалисты свяжутся с вами в ближайшее время.</p>
+
+        <div class="iziModal-header-buttons">
+          <a href="javascript:void(0)" class="iziModal-button iziModal-button-close" data-izimodal-close=""></a>
+        </div>
+      </div> -->
+
+    <!-- <div class="iziModal-content"> -->
+    <div class="modal-form-header">
+      <a href="javascript:void(0)" class="iziModal-button iziModal-button-close" data-izimodal-close=""></a>
+    </div>
+
+
+    <form action="/feedback/" class="form form_modal js-form">
+      {% csrf_token %}
+
+      <p><label for="id_popup_fio">ФИО:</label> <input id="id_popup_fio" maxlength="100" name="name" type="text"></p>
+      <p><label for="id_popup_phone">Телефон:</label> <input id="id_popup_phone" required maxlength="15" name="phone"
+          type="text"></p>
+
+      <div class="form__submit">
+        <button class="btn btn_primary btn_lg">Отправить</button>
+      </div>
+    </form>
+    <!-- </div> -->
+  </div>
+  <script defer src="{% static 'frontend/jquery-3.4.1.min.js' %}"></script>
+  <script defer src="{% static 'frontend/Swiper/js/swiper.min.js' %}"></script>
+  <script defer src="{% static 'frontend/iziToast/dist/js/iziToast.min.js' %}"></script>
+  <script defer src="{% static 'frontend/iziModal/js/iziModal.min.js' %}"></script>
+  <script defer src="{% static 'frontend/js/main.js' %}"></script>
+
+  <!-- Yandex.Metrika counter -->
+  <script> (function (m, e, t, r, i, k, a) { m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) }; m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a) })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(35758920, "init", { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true, trackHash: true, ecommerce: "dataLayer" }); </script>
+  <!-- /Yandex.Metrika counter -->
+
+  <script src="https://code.jivosite.com/widget.js" data-jv-id="5QeCxB2ZqL" async></script>
+</body>
+
+</html>

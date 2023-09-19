@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+
+{% block head_meta %}
+  <title>{% if page.meta_title %}{{page.meta_title}}{% else %}{{title}} | Австостан{% endif %}</title>
+  <meta name="Keywords" content="{{page.meta_keywords}}">
+  <meta name="Description" content="{{page.meta_description}}">
+{% endblock head_meta %}
+
+{% block content %}
+  <div class="breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs__list" itemscope itemtype="http://schema.org/BreadcrumbList">
+        {% for b in breadcrumbs %}
+          <li class="breadcrumbs__list-i" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="{{b.url}}" class="breadcrumbs__link"><span itemprop="name">{{b.title}}</span></a>
+            <meta itemprop="position" content="{{b.position}}" />
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="category-menu-toggle hidden-md hidden-lg">
+    <div class="category-menu-toggle__btn">
+      <span class="category-menu-toggle__icon">
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+      </span>
+      <span class="category-menu-toggle__txt category-menu-toggle__txt-closed">Открыть каталог</span>
+      <span class="category-menu-toggle__txt category-menu-toggle__txt-open">Скрыть каталог</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-lg-3 sidebar">
+          {% include "catalog/sidebar.html" %}
+        </div>
+        <div class="col-md-8 col-lg-9 main-content-block">
+          
+          {% if page %}
+            
+          <h1 class="page-title">{{page.h1|default:page.title}}</h1>
+          <div class="b-text">{{page.content|safe}}</div>
+          {% endif %}
+            
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

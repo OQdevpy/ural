@@ -1,0 +1,54 @@
+<style>
+.data-table th {
+    text-align: left;
+}
+
+.data-table td {
+    padding: 6px;
+}
+</style>
+
+<h1>Заказ №{{ order.id }}</h1>
+
+<h2>Данные покупателя</h2>
+<table class="data-table">
+    <tr>
+        <td>Имя</td>
+        <td>{{ order.receiver }}</td>
+    </tr>
+    <tr>
+        <td>Телефон</td>
+        <td>{{ order.phone }}</td>
+    </tr>
+    <tr>
+        <td>E-mail</td>
+        <td>{{ order.email }}</td>
+    </tr>
+    <tr>
+        <td>Комментарий</td>
+        <td>{{ order.comment }}</td>
+    </tr>
+</table>
+
+<h2>Товары а заказе</h2>
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in order.items.all %}
+            <tr>
+                <td>{{ i.offer.product.title }} {{ i.offer.title }}</td>
+                <td>{{ i.price }}</td>
+                <td>{{ i.quantity }}</td>
+                <td>{{ i.cost }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

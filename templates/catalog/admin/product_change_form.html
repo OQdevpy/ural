@@ -1,0 +1,75 @@
+{% extends "admin/change_form.html" %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+
+    {{ media }}
+
+   <!--  <script>var jQuery = django.jQuery;</script>
+    <link rel="stylesheet" href="/static/core/admin/jquery-ui-1.12.1/jquery-ui.min.css">
+    <script src="/static/core/admin/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="/static/core/admin/dropzone.js"></script> -->
+{% endblock %}
+
+{% block form_top %}
+{% if request.GET.test_mode %}
+
+    <!-- <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">Свойства страницы</a></li>
+        <li><a href="#tabs-2">Свойства товара</a></li>
+        <li><a href="#tabs-3">Галерея</a></li>
+      </ul>
+      <div id="tabs-1">
+        1
+      </div>
+      <div id="tabs-2">
+        2
+      </div>
+      <div id="tabs-3">
+        2
+      </div>
+    </div> -->
+
+    {% include 'core/gallery/admin/gallery_editor.html' with object_id=object_id model='Product' app='catalog' %}
+{% endif %}
+{% endblock %}
+
+{% block field_sets %}
+    {% if request.GET.test_mode %}
+        <h1><b> !!!! TEST MODE !!!!</b></h1>
+    {% endif %}
+
+    {% for fieldset in adminform %}
+        {% if fieldset.name == 'product_offers' %}
+            <!-- Offers -->
+                {% for inline_admin_formset in inline_admin_formsets %}
+                    {% if inline_admin_formset.formset.prefix == 'offers' %}
+                        {% include inline_admin_formset.opts.template %}
+                    {% endif %}
+                {% endfor %}
+            <!-- / Offers -->
+        {% else %}
+                {% include "admin/includes/fieldset.html" %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+
+{% block admin_change_form_document_ready %}
+    {{ block.super }}
+    <script>
+      jQuery( function() {
+        jQuery( "#tabs" ).tabs();
+      } );
+      </script>
+{% endblock %}
+
+{% block inline_field_sets %}
+    {% for inline_admin_formset in inline_admin_formsets %}
+        {% if inline_admin_formset.formset.prefix != 'offers' %}
+             {% include inline_admin_formset.opts.template %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

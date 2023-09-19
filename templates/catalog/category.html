@@ -1,0 +1,133 @@
+{% extends 'core/base.html' %}
+
+{% load sidebar %}
+
+{% block head_meta %}
+  <title>{% if category.meta_title %}{{category.meta_title}}{% else %}{{category.title}} | Австостан{% endif %}</title>
+  <meta name="Keywords" content="{{category.meta_keywords}}">
+  <meta name="Description" content="{{category.meta_description}}">
+{% endblock head_meta %}
+
+{% block content %}
+  <div class="breadcrumbs">
+    <div class="container">
+      <ul class="breadcrumbs__list" itemscope itemtype="http://schema.org/BreadcrumbList">
+        {% for b in breadcrumbs %}
+          <li class="breadcrumbs__list-i" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="{{b.url}}" class="breadcrumbs__link"><span itemprop="name">{{b.title}}</span></a>
+            <meta itemprop="position" content="{{b.position}}" />
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="category-contacts">
+    <div class="container">
+      <div class="category-contacts__box">
+        {% if root_category.banner_text %}
+        {{ root_category.banner_text|safe }}
+        {% else %}
+        Есть вопросы? Нужна консультация по вопросам покупки опор ЛЭП? Звоните по телефону: <a href="tel:+7 (123) 456 78 90">+7 (123) 456 78 90</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="category-menu-toggle hidden-md hidden-lg">
+    <div class="category-menu-toggle__btn">
+      <span class="category-menu-toggle__icon">
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+        <span class="category-menu-toggle__icon-i"></span>
+      </span>
+      <span class="category-menu-toggle__txt category-menu-toggle__txt-closed">Открыть каталог</span>
+      <span class="category-menu-toggle__txt category-menu-toggle__txt-open">Скрыть каталог</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-4 col-lg-3 sidebar">
+          {% include "catalog/sidebar.html" %}
+        </div>
+        <div class="col-md-8 col-lg-9  main-content-block">
+          <h1 class="page-title">{{category.title}}</h1>
+
+          <ul class="product-list">
+            {% for p in products %}
+              <li class="product-list-item js-product-calc">
+                <a class="product-list-item__img-wrap" href="{{p.get_absolute_url}}" onclick="product_url(this)">
+                  {% if p.image %}
+                    <img src="{{p.image.url}}" alt=".." class="product-list-item__img">
+                  {% else %}
+                    <img src="//placehold.it/100x100" alt=".." class="product-list-item__img">
+                  {% endif %}
+                </a>
+                <div class="product-list-item__content">
+                  <a href="{{p.get_absolute_url}}" onclick="product_url(this)" class="product-list-item__title">{{p.title}}</a>
+                  <p class="product-list-item__introtext">{{p.introtext}}</p>
+
+                  {% if p.offers.all %}
+                    <div class="product-price" {% if p.first_offer.old_price <= 0 %}style="display: none;"{% endif %}>
+                      <span class="product-price__title">Старая цена:</span>
+                      <span class="product-price__val product-price__val_old js-product-old-price">{{ p.first_offer.old_price }}</span>
+                      <span class="product-price__curr">руб./шт.</span>
+                    </div>
+
+                    <div class="product-price">
+                      <span class="product-price__title">Цена:</span>
+                      <span class="product-price__val js-product-price">{{p.first_offer.price}}</span>
+                      <span class="product-price__curr">руб./шт.</span>
+                    </div>
+
+                    <form class="product-list-item__actions js-catalog-form" method="POST" action="/order/add/">
+                      {% csrf_token %}
+
+                      {% if p.offers.count > 1 %}
+                        <div class="product-list-item__select-wrap">
+                          <select name="offer_id">
+                            {% for o in p.offers.all %}
+                              <option data-oldprice="{{o.old_price}}" data-price="{{o.price}}" value="{{o.id}}">{{o.title}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      {% else %}
+                        <input type="hidden" name="offer_id" value="{{p.first_offer.id}}">
+                      {% endif %}
+
+                      <div class="product-quantity">
+                        <a href="#" class="product-quantity__left"><svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-icon-prev"></use></svg></a>
+                        <input name="quantity" type="text" class="product-quantity__input" value="1">
+                        <a href="#" class="product-quantity__right"><svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-icon-next"></use></svg></a>
+                      </div>
+
+                      <button class="btn btn_primary" type="submit"><span class="btn__text">Добавить в корзину</span></button>
+
+                    </form>
+                  {% endif %}
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+          <script>
+            function product_url(url){
+              var country = localStorage.getItem('coutry');
+              var href = url.getAttribute('href');
+              var newHref ='/' +  country  + href;
+              url.setAttribute('href', newHref);
+
+            }
+          </script>
+
+          <div class="category-content">
+            {{category.content|safe}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

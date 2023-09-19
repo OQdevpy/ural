@@ -1,0 +1,90 @@
+<div class="gallery-editor" data-object="{{object_id}}" data-app="{{app}}" data-model="{{model}}">
+  <div class="gallery-editor__panel">
+    <div class="gallery-editor-uploader">
+      <div class="gallery-editor-uploader__inner"> Добавить файлы </div>
+    </div>
+  </div>
+  <div class="gallery-editor__items">
+    <div class="gallery-item"></div><div class="gallery-item"></div><div class="gallery-item"></div><div class="gallery-item"></div><div class="gallery-item"></div><div class="gallery-item"></div><div class="gallery-item"></div>
+  </div>
+</div>
+
+<style>
+    .gallery-editor {
+      width: 835px;
+      border: 1px solid #ddd;
+    }
+    .gallery-editor__panel {
+      padding: 10px;
+    }
+    .gallery-editor__items {
+      padding: 10px;
+    }
+    .gallery-editor-uploader {
+      font-size: 24px;
+      text-align: center;
+      height: 150px;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: -o-flex;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: space-around;
+      border: 2px solid #79aec8;
+      cursor: pointer;
+    }
+    .gallery-editor-uploader.dz-drag-hover,
+    .gallery-editor-uploader:hover {
+      background-color: #c4dce8;
+    }
+    .gallery-editor-uploader__inner {
+
+    }
+    .gallery-editor-uploader.dz-drag-hover .gallery-editor-uploader__inner,
+    .gallery-editor-uploader:hover .gallery-editor-uploader__inner {
+
+    }
+    .gallery-item {
+      width: 16.66%;
+      height: 126px;
+      background-color: gray;
+      display: inline-block;
+      vertical-align: top;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 10px solid #fff;
+    }
+    .gallery-item.ui-sortable-helper {
+      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    }
+</style>
+
+<script>
+  var jQuery = django.jQuery;
+
+  (function($){
+      if ($.ui == undefined) {
+          $('<link/>', {
+             rel: 'stylesheet',
+             type: 'text/css',
+             href: '/static/core/admin/jquery-ui-1.12.1/jquery-ui.min.css'
+          }).appendTo('head');
+
+          $.getScript("/static/core/admin/jquery-ui-1.12.1/jquery-ui.min.js", function(){
+              $('.gallery-editor__items').sortable();
+              $('.gallery-editor__items').disableSelection();
+          });
+      }
+
+      if (window.Dropzone == undefined) {
+        $.getScript("/static/core/admin/dropzone.js", function(){
+          var myDropzone = new Dropzone("div.gallery-editor-uploader", {
+            url: "/file/post",
+            previewTemplate : '<div style="display:none"></div>'
+          });
+        });
+      }
+  })(django.jQuery);
+</script>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://{{ domain }}/</loc>
+        <lastmod>{{ home_page.updated_at|date:"Y-m-d" }}</lastmod>
+        <changefreq>monthly</changefreq>
+    </url>
+
+    {% for p in pages %}
+        <url>
+            <loc>https://{{ domain }}/{{ p.alias }}/</loc>
+            <lastmod>{{ p.updated_at|date:"Y-m-d" }}</lastmod>
+            <changefreq>monthly</changefreq>
+        </url>
+    {% endfor %}
+
+    <url>
+        <loc>https://{{ domain }}/catalog/</loc>
+        <lastmod>{{ catalog_page.updated_at|date:"Y-m-d" }}</lastmod>
+        <changefreq>monthly</changefreq>
+    </url>
+
+     {% for c in categories %}
+        <url>
+            <loc>https://{{ domain }}/catalog/{{ c.alias }}/</loc>
+            <lastmod>{{ c.updated_at|date:"Y-m-d" }}</lastmod>
+            <changefreq>monthly</changefreq>
+        </url>
+     {% endfor %}
+
+     {% for p in products %}
+        <url>
+            <loc>https://{{ domain }}{{ p.get_absolute_url }}</loc>
+            <lastmod>{{ p.updated_at|date:"Y-m-d" }}</lastmod>
+            <changefreq>monthly</changefreq>
+        </url>
+     {% endfor %}
+</urlset>

@@ -5,6 +5,9 @@ from django.utils.translation import gettext_lazy as _
 from .models import Category, Order, OrderItem, Product, Offer
 from common.admin import *
 
+
+
+
 class OfferInline(admin.TabularInline):
     model = Offer
     fields = ('title', 'price', 'old_price', 'article', 'quantity', 'order')
